@@ -18,7 +18,7 @@ export default function StudentHome() {
       <h1 className="text-4xl font-bold text-green-700 mb-2">
         Welcome{studentName ? `, ${studentName}` : ''}!
       </h1>
-      <p className="text-gray-600 text-lg mb-10">Choose what you'd like to do today</p>
+      <p className="text-gray-600 text-lg mb-10">Select what you want to do today</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-3xl">
         <Link href="/student/quizzes">
