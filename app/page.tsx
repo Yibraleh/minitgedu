@@ -1,47 +1,41 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import WebApp from '@twa-dev/sdk';
 
-interface UserData {
-  id: number;
-  first_name: string;
-  last_name: string;
-  username: string;
-  language_code: string;
-  is_premium: boolean;
-}
-
 export default function Home() {
-  const [userData, setUserData] = useState<UserData | null>(null);
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const user = WebApp?.initDataUnsafe?.user as UserData;
-      if (user) {
-        setUserData(user);
-        WebApp.ready(); // important for Telegram to mark app as ready
-      }
+      WebApp.ready(); // Let Telegram know the app is ready
+      WebApp.expand(); // Optional: make it full height
     }
   }, []);
 
   return (
-    <main className="p-4">
-      {userData ? (
-        <>
-          <h1 className="text-2xl font-bold mb-4">User Information</h1>
-          <ul>
-            <li><strong>ID:</strong> {userData.id}</li>
-            <li><strong>First Name:</strong> {userData.first_name}</li>
-            <li><strong>Last Name:</strong> {userData.last_name}</li>
-            <li><strong>Username:</strong> {userData.username}</li>
-            <li><strong>Language Code:</strong> {userData.language_code}</li>
-            <li><strong>Is Premium:</strong> {userData.is_premium ? 'Yes' : 'No'}</li>
-          </ul>
-        </>
-      ) : (
-        <div>Loading...</div>
-      )}
+    <main className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
+      <h1 className="text-3xl font-bold text-center mb-6">
+        Welcome to the Quiz App
+      </h1>
+
+      <p className="text-lg mb-8 text-gray-700 text-center">
+        Choose your role to continue:
+      </p>
+
+      <div className="flex gap-4">
+        <button
+          onClick={() => window.location.href = '/admin'}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow-md"
+        >
+          I’m an Admin
+        </button>
+
+        <button
+          onClick={() => window.location.href = '/student'}
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl shadow-md"
+        >
+          I’m a Student
+        </button>
+      </div>
     </main>
   );
 }
